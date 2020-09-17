@@ -3,10 +3,7 @@
   "package": "supercoder79.ecotones.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "BlockPlacerTypeAccessor",
-    "FoliagePlacerTypeAccessor",
-    "MixinGeneratorOptions",
-    "TreeDecoratorTypeAccessor"
+    "MixinBiomesFix"
   ],
   "client": [
   ],

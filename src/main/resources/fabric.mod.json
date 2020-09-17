@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "ecotones",
+  "id": "lossless-tones",
   "version": "0.6.0",
 
-  "name": "Ecotones",
-  "description": "A biome overhaul mod with realistic and expansive biomes filled with life",
+  "name": "Lossless Tones",
+  "description": "A mod to prevent breaking worlds when upgrading without ecotones",
   "authors": [
-    "SuperCoder79"
+    "SuperCoder79",
+	"Siphalor"
   ],
   "contact": {
     "sources": "https://github.com/SuperCoder7979/ecotones"
@@ -28,15 +29,9 @@
     "ecotones.mixins.json"
   ],
 
-  "accessWidener" : "ecotones.aw",
-
   "depends": {
     "fabricloader": ">=0.7.2",
     "fabric": "*",
     "minecraft": ">=1.16-"
-  },
-  "suggests": {
-    "traverse": "*",
-    "terrestria": "*"
   }
 }

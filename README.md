@@ -1,12 +1,5 @@
-Ecotones creates biomes based on factors such as humidity, temperature, elevation, and soil drainage. When put together, these factors create a lot of unique biomes! Ecotones currently adds 27 biomes with many variants. It replaces the vanilla generator so it's currently not compatible with any other biome mod.
+Lossless Tones is a fork of Ecotones that removes all biomes and fixes them to vanilla biomes.
 
- 
-# Discord Server
+All Credit for blocks and items goes to Supercoder.
 
-https://discord.gg/BuBGds9
-
-Join to talk about Ecotones and get information about the next updates! 
-
-# WARNING
-
-This mod is highly in development and things will change with or without notice! Don't use this mod unless you're fine with a lot of changes to your world!
+Changes are the removal of any worldgen and biomes and the transition to vanilla biomes using the MixinBiomesFix mixin. These changes are visible through the git commit history.

@@ -3,7 +3,8 @@
   "package": "supercoder79.ecotones.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinBiomesFix"
+    "MixinRegistrySyncManager",
+    "MixinSchemas"
   ],
   "client": [
   ],

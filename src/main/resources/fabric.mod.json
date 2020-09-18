@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "lossless-tones",
+  "id": "detonification",
   "version": "0.6.0",
 
-  "name": "Lossless Tones",
-  "description": "A mod to prevent breaking worlds when upgrading without ecotones",
+  "name": "Detonification",
+  "description": "A mod to prevent breaking worlds when upgrading without ecotones. This means converting biomes to similar vanilla biomes but keeping the items and blocks.",
   "authors": [
     "SuperCoder79",
 	"Siphalor"
@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "supercoder79.ecotones.Ecotones"
+      "supercoder79.ecotones.Detonification"
     ],
     "client": [
       "supercoder79.ecotones.EcotonesClient"

@@ -35,9 +35,9 @@ public class EcotonesBiomesFix extends DataFix {
 					} else {
 						Registry<Biome> biomeRegistry = BuiltinRegistries.BIOME;
 						return dynamic.set("Biomes", dynamic.createIntList(biomes.get().map(i -> {
-							Detonification.RegistryEntry alt = Detonification.BIOME_RENAMES.get(i);
+							String alt = Detonification.ECOTONES_BIOME_IDS.get(i);
 							if (alt != null) {
-								return biomeRegistry.getRawId(biomeRegistry.get(alt.identifier));
+								return biomeRegistry.getRawId(biomeRegistry.get(Detonification.BIOME_RENAMES.get(alt)));
 							}
 							return i;
 						})));

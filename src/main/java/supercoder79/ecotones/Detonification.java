@@ -1,5 +1,6 @@
 package supercoder79.ecotones;
 
+import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectAVLTreeMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.fabricmc.api.ModInitializer;
@@ -12,12 +13,12 @@ import supercoder79.ecotones.blocks.EcotonesBlocks;
 import supercoder79.ecotones.client.sound.Sounds;
 import supercoder79.ecotones.items.EcotonesItems;
 
+import java.util.Map;
+
 public class Detonification implements ModInitializer {
 	public static final String MOD_ID = "detonification";
-	public static Int2ObjectMap<String> BIOME_MAP = new Int2ObjectAVLTreeMap<>();
-	public static SimpleRegistry<RegistryEntry> BIOME_RENAMES = FabricRegistryBuilder.createSimple(RegistryEntry.class, new Identifier(MOD_ID, "biome_renames"))
-			.attribute(RegistryAttribute.PERSISTED)
-			.buildAndRegister();
+	public static Int2ObjectMap<String> ECOTONES_BIOME_IDS = new Int2ObjectAVLTreeMap<>();
+	public static Map<String, Identifier> BIOME_RENAMES = createRenames();
 
 	static {
 		createRenames();
@@ -31,126 +32,130 @@ public class Detonification implements ModInitializer {
 		EcotonesItems.init();
 	}
 
-	private static void createRenames() {
-		putBiomes("desert", "desert", "desert_hills", "desert_hills");
-		putBiomes("scrubland", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("steppe", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("tropical_grassland", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("lush_savannah", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("dry_forest", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("lush_forest", "forest", "wooded_hills", "wooded_hills");
-		putBiomes("tropical_rainforest", "jungle", "jungle_hills", "modified_jungle");
+	private static Map<String, Identifier> createRenames() {
+		ImmutableMap.Builder<String, Identifier> builder = ImmutableMap.builder();
 
-		putBiomes("swamp", "swamp", "swamp", "swamp_hills");
+		putBiomes(builder, "desert", "desert", "desert_hills", "desert_hills");
+		putBiomes(builder, "scrubland", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "steppe", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "tropical_grassland", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "lush_savannah", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "dry_forest", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "lush_forest", "forest", "wooded_hills", "wooded_hills");
+		putBiomes(builder, "tropical_rainforest", "jungle", "jungle_hills", "modified_jungle");
 
-		putBiomes("cool_desert", "desert", "desert_hills", "desert_hills");
-		putBiomes("cool_scrubland", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("cool_steppe", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiomes("prairie", "plains", "plains", "plains");
-		putBiomes("lichen_woodland", "taiga", "taiga_hills", "taiga_mountains");
-		putBiomes("spruce_forest", "snowy_taiga", "snowy_taiga_hills", "snowy_taiga_mountains");
-		putBiomes("temperate_forest", "jungle_edge", "jungle_edge", "modified_jungle_edge");
+		putBiomes(builder, "swamp", "swamp", "swamp", "swamp_hills");
 
-		putBiome("beach", "beach");
+		putBiomes(builder, "cool_desert", "desert", "desert_hills", "desert_hills");
+		putBiomes(builder, "cool_scrubland", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "cool_steppe", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "prairie", "plains", "plains", "plains");
+		putBiomes(builder, "lichen_woodland", "taiga", "taiga_hills", "taiga_mountains");
+		putBiomes(builder, "spruce_forest", "snowy_taiga", "snowy_taiga_hills", "snowy_taiga_mountains");
+		putBiomes(builder, "temperate_forest", "jungle_edge", "jungle_edge", "modified_jungle_edge");
 
-		putBiome("river", "river");
+		putBiome(builder, "beach", "beach");
 
-		putBiome("volcanic_biome", "plains");
-		putBiome("supervolcanic_biome", "sunflower_plains");
-		putBiome("hot_springs", "warm_ocean");
-		putBiome("blessed_springs", "warm_ocean");
+		putBiome(builder, "river", "river");
 
-		putBiome("oasis", "warm_ocean");
-		putBiome("the_pits_edge", "stone_shore");
-		putBiome("the_pits", "stone_shore");
-		putBiome("green_spires", "swamp_hills");
-		putBiome("uluru", "badlands_plateau");
+		putBiome(builder, "volcanic_biome", "plains");
+		putBiome(builder, "supervolcanic_biome", "sunflower_plains");
+		putBiome(builder, "hot_springs", "warm_ocean");
+		putBiome(builder, "blessed_springs", "warm_ocean");
 
-		putBiome("wateland", "forest");
-		putBiome("wateland_thicket", "forest");
-		putBiome("wateland_flats", "forest");
-		putBiome("wateland_hills", "wooded_hills");
-		putBiome("wateland_shrub", "forest");
-		putBiome("wateland_depths", "wooded_hills");
+		putBiome(builder, "oasis", "warm_ocean");
+		putBiome(builder, "the_pits_edge", "stone_shore");
+		putBiome(builder, "the_pits", "stone_shore");
+		putBiome(builder, "green_spires", "swamp_hills");
+		putBiome(builder, "uluru", "badlands_plateau");
 
-		putBiome("hazel_grove", "forest");
-		putBiome("hazel_grove_clearing", "forest");
-		putBiome("hazel_grove_hilly", "wooded_hills");
-		putBiome("hazel_grove_hilly_clearing", "wooded_hills");
+		putBiome(builder, "wateland", "forest");
+		putBiome(builder, "wateland_thicket", "forest");
+		putBiome(builder, "wateland_flats", "forest");
+		putBiome(builder, "wateland_hills", "wooded_hills");
+		putBiome(builder, "wateland_shrub", "forest");
+		putBiome(builder, "wateland_depths", "wooded_hills");
 
-		putBiome("pine_peaks", "giant_spruce_taiga_hills");
+		putBiome(builder, "hazel_grove", "forest");
+		putBiome(builder, "hazel_grove_clearing", "forest");
+		putBiome(builder, "hazel_grove_hilly", "wooded_hills");
+		putBiome(builder, "hazel_grove_hilly_clearing", "wooded_hills");
 
-		putBiomes("flower_prairie", "flower_forest", "flower_forest", "flower_forest");
+		putBiome(builder, "pine_peaks", "giant_spruce_taiga_hills");
 
-		putBiome("woodland_thicket", "forest");
-		putBiome("woodland_clearing", "forest");
-		putBiome("woodland_hilly", "wooded_hills");
-		putBiome("woodland_clearing_hilly", "wooded_hills");
+		putBiomes(builder, "flower_prairie", "flower_forest", "flower_forest", "flower_forest");
 
-		putBiome("clover_fields", "taiga");
-		putBiome("clover_thicket", "taiga");
-		putBiome("clover_flats", "taiga");
-		putBiome("clover_hills", "taiga_hills");
-		putBiome("clover_shrubs", "taiga");
+		putBiome(builder, "woodland_thicket", "forest");
+		putBiome(builder, "woodland_clearing", "forest");
+		putBiome(builder, "woodland_hilly", "wooded_hills");
+		putBiome(builder, "woodland_clearing_hilly", "wooded_hills");
 
-		putBiome("poplar_forest", "forest");
-		putBiome("poplar_forest_clearing", "forest");
-		putBiome("poplar_forest_thicket", "forest");
-		putBiome("poplar_forest_flats", "forest");
-		putBiome("poplar_forest_hills", "wooded_hills");
-		putBiome("poplar_forest_shrubs", "forest");
-		putBiome("poplar_forest_oak", "forest");
-		putBiome("poplar_forest_birch", "birch_forest");
+		putBiome(builder, "clover_fields", "taiga");
+		putBiome(builder, "clover_thicket", "taiga");
+		putBiome(builder, "clover_flats", "taiga");
+		putBiome(builder, "clover_hills", "taiga_hills");
+		putBiome(builder, "clover_shrubs", "taiga");
 
-		putBiomes("temperate_grasslands", "plains", "plains", "plains");
+		putBiome(builder, "poplar_forest", "forest");
+		putBiome(builder, "poplar_forest_clearing", "forest");
+		putBiome(builder, "poplar_forest_thicket", "forest");
+		putBiome(builder, "poplar_forest_flats", "forest");
+		putBiome(builder, "poplar_forest_hills", "wooded_hills");
+		putBiome(builder, "poplar_forest_shrubs", "forest");
+		putBiome(builder, "poplar_forest_oak", "forest");
+		putBiome(builder, "poplar_forest_birch", "birch_forest");
 
-		putBiomes("birch_forest", "tall_birch_forest", "tall_birch_forest_hills", "tall_birch_forest_hills");
+		putBiomes(builder, "temperate_grasslands", "plains", "plains", "plains");
 
-		putBiome("flooded_savannah", "savanna");
+		putBiomes(builder, "birch_forest", "tall_birch_forest", "tall_birch_forest_hills", "tall_birch_forest_hills");
 
-		putBiomes("dead_spruce_forest", "taiga", "taiga_hills", "taiga_mountains");
-		putBiome("dead_spruce_forest_clearing", "taiga");
+		putBiome(builder, "flooded_savannah", "savanna");
 
-		putBiomes("palm_forest", "jungle_edge", "modified_jungle_edge", "modified_jungle_edge");
+		putBiomes(builder, "dead_spruce_forest", "taiga", "taiga_hills", "taiga_mountains");
+		putBiome(builder, "dead_spruce_forest_clearing", "taiga");
 
-		putBiomes("moor", "swamp", "swamp", "swamp_hills");
+		putBiomes(builder, "palm_forest", "jungle_edge", "modified_jungle_edge", "modified_jungle_edge");
 
-		putBiome("aspen_foothills", "birch_forest");
-		putBiome("aspen_foothills_clearing", "birch_forest");
-		putBiome("aspen_hills", "birch_forest");
-		putBiome("aspen_mountains", "birch_forest");
+		putBiomes(builder, "moor", "swamp", "swamp", "swamp_hills");
 
-		putBiomes("lush_desert", "desert", "desert_hills", "desert_hills");
+		putBiome(builder, "aspen_foothills", "birch_forest");
+		putBiome(builder, "aspen_foothills_clearing", "birch_forest");
+		putBiome(builder, "aspen_hills", "birch_forest");
+		putBiome(builder, "aspen_mountains", "birch_forest");
 
-		putBiomes("dry_steppe", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiomes(builder, "lush_desert", "desert", "desert_hills", "desert_hills");
 
-		putBiomes("dry_savanna", "savanna", "savanna_plateau", "shattered_savanna");
-		putBiome("dry_savanna_thicket", "savanna");
+		putBiomes(builder, "dry_steppe", "savanna", "savanna_plateau", "shattered_savanna");
 
-		putBiomes("fertile_valley", "forest", "forest", "forest");
-		putBiome("fertile_valley_clearing", "forest");
-		putBiome("fertile_valley_thicket", "forest");
+		putBiomes(builder, "dry_savanna", "savanna", "savanna_plateau", "shattered_savanna");
+		putBiome(builder, "dry_savanna_thicket", "savanna");
 
-		putBiomes("bluebell_wood", "forest", "forest", "forest");
-		putBiome("bluebell_wood_clearing", "forest");
-		putBiome("bluebell_wood_thicket", "forest");
+		putBiomes(builder, "fertile_valley", "forest", "forest", "forest");
+		putBiome(builder, "fertile_valley_clearing", "forest");
+		putBiome(builder, "fertile_valley_thicket", "forest");
 
-		putBiomes("spruce_marsh", "taiga", "taiga_hills", "taiga_mountains");
-		putBiome("spruce_marsh_thicket", "giant_spruce_taiga");
+		putBiomes(builder, "bluebell_wood", "forest", "forest", "forest");
+		putBiome(builder, "bluebell_wood_clearing", "forest");
+		putBiome(builder, "bluebell_wood_thicket", "forest");
 
-		putBiome("mangrove_swamp", "swamp");
+		putBiomes(builder, "spruce_marsh", "taiga", "taiga_hills", "taiga_mountains");
+		putBiome(builder, "spruce_marsh_thicket", "giant_spruce_taiga");
 
-		putBiome("rose_field", "plains");
+		putBiome(builder, "mangrove_swamp", "swamp");
+
+		putBiome(builder, "rose_field", "plains");
+
+		return builder.build();
 	}
 
-	private static void putBiomes(String biome, String alternative, String alternativeHilly, String alternativeMountainous) {
-		putBiome(biome, alternative);
-		putBiome(biome + "_hilly", alternativeHilly);
-		putBiome(biome + "_mountainous", alternativeMountainous);
+	private static void putBiomes(ImmutableMap.Builder<String, Identifier> builder, String biome, String alternative, String alternativeHilly, String alternativeMountainous) {
+		putBiome(builder, biome, alternative);
+		putBiome(builder, biome + "_hilly", alternativeHilly);
+		putBiome(builder, biome + "_mountainous", alternativeMountainous);
 	}
 
-	private static void putBiome(String biome, String alternative) {
-		Registry.register(BIOME_RENAMES, new Identifier("ecotones", biome), new RegistryEntry(new Identifier("minecraft", alternative)));
+	private static void putBiome(ImmutableMap.Builder<String, Identifier> builder, String biome, String alternative) {
+		builder.put("ecotones:" + biome, new Identifier("minecraft", alternative));
 	}
 
 	public static class RegistryEntry {
